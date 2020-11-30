@@ -1,6 +1,8 @@
-import logo from './logo.svg';
 import './App.css';
 import React, { useState } from 'react';
+import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react'
+import axios from 'axios';
+
 
 function App() {
 
@@ -14,6 +16,11 @@ function App() {
     e.preventDefault();
 
     console.log(address , city , province, postalCode, country)
+
+   axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=AIzaSyDDF_h5Ey-IhCHURBLT97qjEthtD8pvXE4`)
+      .then(res => console.log(res))
+    
+  
     
   }
 
@@ -71,4 +78,7 @@ function App() {
   );
 }
 
-export default App;
+
+export default GoogleApiWrapper({
+  apiKey: 'AIzaSyDDF_h5Ey-IhCHURBLT97qjEthtD8pvXE4'
+})(App)
