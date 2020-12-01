@@ -17,10 +17,18 @@ function App() {
 
     console.log(address , city , province, postalCode, country)
 
-   axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=AIzaSyDDF_h5Ey-IhCHURBLT97qjEthtD8pvXE4`)
-      .then(res => console.log(res))
-    
+   let latLong = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=AIzaSyDDF_h5Ey-IhCHURBLT97qjEthtD8pvXE4`)
+     
+   console.log(latLong.data.results[0].geometry.location.lat, latLong.data.results[0].geometry.location.lng, "Latitude e Longitude")
+
+   let timeStamp = Math.floor(Date.now() / 1000)
   
+   console.log(timeStamp, "whats in here?") 
+
+   let timeZone = await axios.get(`https://maps.googleapis.com/maps/api/timezone/json?location=${latLong.data.results[0].geometry.location.lat},${latLong.data.results[0].geometry.location.lng}&timestamp=${timeStamp}&key=AIzaSyDDF_h5Ey-IhCHURBLT97qjEthtD8pvXE4`)
+    
+   
+   console.log(timeZone, "timezone")
     
   }
 
