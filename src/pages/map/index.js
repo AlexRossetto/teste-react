@@ -34,3 +34,7 @@ export default function Mapa({ history }) {
   </>
   )
 }
+
+// export default GoogleApiWrapper({
+//   apiKey: 'AIzaSyDDF_h5Ey-IhCHURBLT97qjEthtD8pvXE4'
+// })(Mapa)

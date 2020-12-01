@@ -1,10 +1,7 @@
 import './App.css';
-import React, { useState } from 'react';
-import Routes from './services/routes';
-import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react'
-import axios from 'axios';
-
-
+import React from 'react';
+import Routes from './routes';
+import { GoogleApiWrapper } from 'google-maps-react'
 
 function App() {
   return (
@@ -12,7 +9,6 @@ function App() {
   );
 }
 
-
 export default GoogleApiWrapper({
-  apiKey: 'AIzaSyDDF_h5Ey-IhCHURBLT97qjEthtD8pvXE4'
+  apiKey: process.env.REACT_APP_API_KEY
 })(App)
