@@ -1,0 +1,24 @@
+.Container {
+  background: red;
+  height: 400px;
+  width: 50%;
+  margin: 100px auto;
+}
+
+#address {
+  width: 100%;
+}
+
+#postal {
+ 
+}
+
+.btn {
+  width:80px;
+  height: 40px;
+  margin-left: 10px;
+  background: lightblue;
+  border: none;
+  border-radius: 2px;
+}
+

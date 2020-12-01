@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Routes from '../../services/routes';
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react'
 import axios from 'axios';
+import './index.css';
 
 
 function Home({history}) {
@@ -31,7 +32,13 @@ function Home({history}) {
    
    console.log(timeZone, "timezone")
 
-   history.push('/map')
+   localStorage.setItem('lat', latLong.data.results[0].geometry.location.lat);
+   localStorage.setItem('lng', latLong.data.results[0].geometry.location.lng);
+   localStorage.setItem('timeZone', JSON.stringify(timeZone.data));
+
+   history.push({
+    pathname: '/map'
+   })
     
   }
 
