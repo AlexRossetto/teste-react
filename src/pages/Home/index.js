@@ -14,14 +14,21 @@ function Home({ history }) {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    let latLong = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address},${city},${province}&key=${process.env.REACT_APP_API_KEY}`)
 
+    console.log(process.env.REACT_APP_API_KEY, "Chave da API")
+
+    let latLong = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address},${city},${province}&key=${process.env.REACT_APP_API_KEY}`)
+    console.log(latLong, "request de latitude")
     let timeStamp = Math.floor(Date.now() / 1000)
 
     let timeZone = await axios.get(`https://maps.googleapis.com/maps/api/timezone/json?location=${latLong.data.results[0].geometry.location.lat},${latLong.data.results[0].geometry.location.lng}&timestamp=${timeStamp}&key=${process.env.REACT_APP_API_KEY}`)
-
+    console.log(timeZone, "request de timeZone")
     localStorage.setItem('lat', latLong.data.results[0].geometry.location.lat);
     localStorage.setItem('lng', latLong.data.results[0].geometry.location.lng);
+    timeZone.data.city = city;
+    timeZone.data.province = province;
+    timeZone.data.postalCode = postalCode;
+    timeZone.data.country = country;
     localStorage.setItem('timeZone', JSON.stringify(timeZone.data));
 
     history.push({
