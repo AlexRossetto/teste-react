@@ -1,54 +1,58 @@
-import React, { useEffect, useState, useMemo } from 'react';
-import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
+import React, { useEffect, useState } from 'react';
+import { Map, Marker, GoogleApiWrapper } from 'google-maps-react';
 import './index.css';
-import { Link } from 'react-router-dom';
 
- function Mapa({ history }) {
+function Mapa({ history }) {
   const [lat, setLat] = useState(null)
   const [lng, setLng] = useState(null)
   const [timezone, setTimezone] = useState(null)
-  const mapStyles = {
-    width: '100%',
-    height: '70%',
-  };
 
-useEffect(() => {
-// seta o estado do componenent
-  setLat(localStorage.getItem('lat'))
-  setLng(localStorage.getItem('lng'))
-  setTimezone(JSON.parse(localStorage.getItem('timeZone')))
-},[])
+  useEffect(() => {
+    setLat(localStorage.getItem('lat'))
+    setLng(localStorage.getItem('lng'))
+    setTimezone(JSON.parse(localStorage.getItem('timeZone')))
+  }, [])
 
   if (!lat || !lng || !timezone) {
-    debugger
-    console.log("caiu aqui")
     return null;
   }
 
-  console.log(lat, "latitude NA PAGINA MAPA")
-  console.log(lng, "longitude NA PAGINA MAPA")
-  console.log(timezone, "TIMEZONE NA PAGINA MAPA")
-
-    return (
-      <>
-      <div>
-        <div>
-          <Map
-              google={window.google}
-              zoom={15}
-              style={mapStyles}
-              initialCenter={{ lat: lat, lng: lng}}
-            >
-            <Marker position={{ lat: lat, lng: lng}} />
-          </Map>
-        </div>
-        <div>
-        </div> 
-      </div>  
-      </>
-    );
+  function Voltar() {
+    localStorage.clear();
+    history.push('/')
   }
 
+  function calcTime(timezone) {
+    let d = new Date().toLocaleString("en-US", { timeZone: timezone })
+    let timezoneDate = new Date(d)
+
+    return `${timezoneDate.getHours()}:${timezoneDate.getMinutes()} ${timezoneDate.getHours() >= 12 ? 'PM' : ''}`
+  }
+
+  return (
+    <>
+      <div className="Container">
+        <div className="Wrapper">
+          <div className="Text">
+            <h2>{timezone.address}</h2>
+            <h3> {calcTime(timezone.timeZoneId)} {timezone.timeZoneName}</h3>
+          </div>
+          <div className="Map">
+            <Map
+              google={window.google}
+              zoom={15}
+
+              initialCenter={{ lat, lng }}
+            >
+              <Marker position={{ lat, lng }} />
+            </Map>
+          </div>
+          <button onClick={() => Voltar()} className="btn button">{'< Back'}</button>
+        </div>
+      </div>
+    </>
+  );
+}
 
 export default GoogleApiWrapper({
   apiKey: process.env.REACT_APP_API_KEY

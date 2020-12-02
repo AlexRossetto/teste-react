@@ -25,6 +25,7 @@ function Home({ history }) {
     console.log(timeZone, "request de timeZone")
     localStorage.setItem('lat', latLong.data.results[0].geometry.location.lat);
     localStorage.setItem('lng', latLong.data.results[0].geometry.location.lng);
+    timeZone.data.address = latLong.data.results[0].formatted_address;
     timeZone.data.city = city;
     timeZone.data.province = province;
     timeZone.data.postalCode = postalCode;
